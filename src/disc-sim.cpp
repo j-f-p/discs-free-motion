@@ -4,8 +4,8 @@
 int main() {
   SDL_Init(SDL_INIT_VIDEO);
 
-  const unsigned short cScreenWidth{640};   // old school standard definition
-  const unsigned short cScreenHeight{480};  // SD 480p, AR = 4:3
+  const unsigned short cScreenWidth{480};
+  const unsigned short cScreenHeight{480};
 
   SDL_Window*
   sdl_window = SDL_CreateWindow("Disk Simulation", SDL_WINDOWPOS_CENTERED,
@@ -16,7 +16,7 @@ int main() {
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
   // Clear (paint) screen with set render draw colour: a dark grey.
-  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0xFF);
+  SDL_SetRenderDrawColor(sdl_renderer, 0xA9, 0xA9, 0xA9, 0xFF);
   SDL_RenderClear(sdl_renderer);
 
   // Render centered, quarter-screen-sized and filled rectangle dark green.
