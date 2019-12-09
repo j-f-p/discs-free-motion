@@ -9,7 +9,7 @@
 
 struct Circ {
   IntPair center;
-  const unsigned int radius;
+  const unsigned short radius;
 };
 
 void RenderFillCirc(SDL_Renderer*, Circ*);

@@ -17,4 +17,7 @@ int main() {
     IntPair(display.screen_width / 2, display.screen_height / 2 ),
     IntPair()
   )); // Disc(radius, center, zero-initialized velocity)
+
+  display.setDiscs(discs);
+  display.animate();
 }
