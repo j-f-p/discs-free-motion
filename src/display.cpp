@@ -23,20 +23,28 @@ void Display::animate() const {
   bool advance = true;
 
   while (advance) {
-    // Add render instructions.
 
+    discs[0]->move();
+
+    // Begin render instructions. ---------------------------------------------
     // Clear (paint) screen with set render draw colour: a dark grey.
     SDL_SetRenderDrawColor(sdl_renderer, 0xA9, 0xA9, 0xA9, 0xFF);
     SDL_RenderClear(sdl_renderer);
 
-    // Set render draw color to a dark red.
-    SDL_SetRenderDrawColor( sdl_renderer, 0xA9, 0x00, 0x00, 0xFF );
-    // diagonal reference line
+    // Set render draw color to black.
+    SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0xFF);
+    // diagonal reference lines
     SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
+    SDL_RenderDrawLine(sdl_renderer, screen_width, 0, 0, screen_height);
 
-    Circ circ = {  // static_cast here appeases compiler warning
-      discs[0]->position, static_cast<unsigned short>(screen_height/4) };
-    RenderFillCirc( sdl_renderer, &circ );
+    // Set render draw color to a red with ~50% opacity.
+    SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0x80);
+    Circ circ = {discs[0]->position, discs[0]->radius};
+    // Circ circ = {  // static_cast here appeases compiler warning
+      // discs[0]->position, static_cast<unsigned short>(screen_height/4) };
+    RenderFillCirc(sdl_renderer, &circ);
+    // End render instructions. -----------------------------------------------
 
     // Execute render instructions.
     SDL_RenderPresent(sdl_renderer);

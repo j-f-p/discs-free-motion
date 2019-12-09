@@ -14,8 +14,10 @@ int main() {
 
   discs.push_back(make_shared<Disc>(
     display.screen_height / 20,
-    IntPair(display.screen_width / 2, display.screen_height / 2 ),
-    IntPair()
+    // IntPair(display.screen_width / 2, display.screen_height / 2 ),
+    IntPair(),
+    // IntPair()
+    IntPair(display.screen_width / 2, display.screen_height / 2 )
   )); // Disc(radius, center, zero-initialized velocity)
 
   display.setDiscs(discs);
