@@ -29,8 +29,11 @@ void Display::animate() const {
     SDL_SetRenderDrawColor(sdl_renderer, 0xA9, 0xA9, 0xA9, 0xFF);
     SDL_RenderClear(sdl_renderer);
 
-    // Render centered, quarter-screen-sized and filled circl dark red.
+    // Set render draw color to a dark red.
     SDL_SetRenderDrawColor( sdl_renderer, 0xA9, 0x00, 0x00, 0xFF );
+    // diagonal reference line
+    SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
+
     Circ circ = {  // static_cast here appeases compiler warning
       discs[0]->position, static_cast<unsigned short>(screen_height/4) };
     RenderFillCirc( sdl_renderer, &circ );
