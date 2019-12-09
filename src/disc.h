@@ -7,15 +7,17 @@
 // Disc represents a solid circular object. Its position attribute refers to
 // the circle's center.
 class Disc {
-    const unsigned int radius;
+    const unsigned short radius;
 
   public:
     IntPair position;
     const IntPair velocity;
 
-    Disc(unsigned int rad, IntPair vel): radius(rad), velocity(vel) { }
+    Disc(unsigned short rad, IntPair pos, IntPair vel)
+      : radius(rad), position(pos), velocity(vel) { }
 
-    const unsigned int retRadius() { return radius; }
+    const unsigned short retRadius() { return radius; }
+    void setPosition(IntPair &pos) { position = pos; }
 
     void move();
 };

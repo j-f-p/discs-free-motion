@@ -12,11 +12,15 @@
 
 // Display is a manager of the logic that displays the disk simulation.
 class Display {
-    const std::vector<std::shared_ptr<Disc>> discs;
+    std::vector<std::shared_ptr<Disc>> discs;
 
   public:
-    Display(std::vector<std::shared_ptr<Disc>>& initDiscs)
-      : discs(initDiscs) { }
+    const unsigned short screen_width{480};
+    const unsigned short screen_height{480};
+    
+    void setDiscs(std::vector<std::shared_ptr<Disc>>& initDiscs) {
+      discs = initDiscs;
+    }
 
     void animate() const;
 };
