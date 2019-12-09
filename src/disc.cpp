@@ -1,8 +1,6 @@
 #include "disc.h"
 // implementing Disc::move for disc.h
-
-// disc.h includes intPair.h
-// using IntPair from intPair.h
+// using IntPair
 
 // Move Disc instance by updating its position based on rectilinear motion with
 // constant velocity.

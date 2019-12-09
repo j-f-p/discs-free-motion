@@ -1,9 +1,7 @@
 #include "fillCirc.h"
-// using Circ and RenderFillCirc from fillCirc.h
-
-// fillCirc.h includes intPair.h and SDL.h
-// using IntPair from intPair.h, as an initialization value 
-// using functions and constants that begin with "SDL_" from SDL.h
+// using Circ and RenderFillCirc
+// using IntPair, as an initialization value
+// using functions and constants that begin with "SDL_"
 
 int main() {
   SDL_Init(SDL_INIT_VIDEO);
