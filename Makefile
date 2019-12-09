@@ -9,6 +9,7 @@ disc_sim : $(OBJECTS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o disc_sim $(OBJECTS) $(LDLIBS)
 	rm $(OBJECTS)
 
+disc.o : disc.h intPair.h
 disc-sim.o : fillCirc.h
 fillCirc.o : fillCirc.h intPair.h
 
