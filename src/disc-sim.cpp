@@ -1,5 +1,9 @@
 #include "fillCirc.h"
-// includes SDL.h
+// using Circ and RenderFillCirc from fillCirc.h
+
+// fillCirc.h includes intPair.h and SDL.h
+// using IntPair from intPair.h, as an initialization value 
+// using functions and constants that begin with "SDL_" from SDL.h
 
 int main() {
   SDL_Init(SDL_INIT_VIDEO);
@@ -27,7 +31,7 @@ int main() {
 
   // Render centered, quarter-screen-sized and filled circl dark red.
   SDL_SetRenderDrawColor( sdl_renderer, 0xA9, 0x00, 0x00, 0xFF );
-  Circ circ = { cScreenWidth / 2, cScreenHeight / 2, cScreenHeight / 4 };
+  Circ circ = { {cScreenWidth / 2, cScreenHeight / 2}, cScreenHeight / 4 };
   RenderFillCirc( sdl_renderer, &circ );
 
   // Apply Clear, FillRect and FillCirc, in that order.
