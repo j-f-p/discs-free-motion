@@ -10,13 +10,14 @@ class Disc {
     const unsigned int radius;
 
   public:
-    IntPair position, velocity;
+    IntPair position;
+    const IntPair velocity;
 
-    Disc(unsigned int rad): radius(rad) { }
+    Disc(unsigned int rad, IntPair vel): radius(rad), velocity(vel) { }
 
     const unsigned int retRadius() { return radius; }
 
-    void move() const;
-}
+    void move();
+};
 
 #endif

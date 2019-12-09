@@ -3,15 +3,16 @@ CPPFLAGS = -I/usr/include/SDL2
 CXXFLAGS = -std=c++17
 LDLIBS = -lSDL2
 
-OBJECTS = disc-sim.o fillCirc.o
+OBJECTS = disc.o disc-sim.o display.o fillCirc.o
 
 disc_sim : $(OBJECTS)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o disc_sim $(OBJECTS) $(LDLIBS)
 	rm $(OBJECTS)
 
-disc.o : disc.h intPair.h
+disc.o : disc.h
 disc-sim.o : fillCirc.h
-fillCirc.o : fillCirc.h intPair.h
+display.o : display.h
+fillCirc.o : fillCirc.h
 
 .PHONY : rmobj
 rmobj :
