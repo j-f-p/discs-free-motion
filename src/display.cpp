@@ -29,10 +29,13 @@ void Display::animate() {
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
   bool advance = true;
+  // long frame_life = 16; // millisec, so that frame_rate ~= 60 Hz
+  // long frame_life = 20; // millisec, so that frame_rate ~= 48 Hz
+  // long frame_life = 33; // millisec, so that frame_rate ~= 30 Hz
   long frame_life = 41; // millisec, so that frame_rate ~= 24 Hz
-
   time_point<system_clock> frame_start = system_clock::now();
   long frame_age;
+  short nF = 0;
 
   while (advance) {
     sleep_for(milliseconds(1)); // to moderate CPU
@@ -43,9 +46,11 @@ void Display::animate() {
     if(frame_age >= frame_life) {
       discs[0]->move();
       renderFrame();
-      advance = false;
+      nF++;
+      if(nF==120)
+        advance = false;
+      frame_start = system_clock::now();
     }
-    frame_start = system_clock::now();
   }
 
   SDL_Delay(2000); // 2 sec delay
