@@ -10,6 +10,7 @@
 
 #include <chrono>
     using std::chrono::duration_cast;
+    using std::chrono::microseconds;
     using std::chrono::milliseconds;
     using std::chrono::system_clock;
     using std::chrono::time_point;
@@ -28,7 +29,7 @@ void Display::animate() {
 
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
-  bool advance = true;
+  bool advance = true, idle = true;
   // long frame_life = 16; // millisec, so that frame_rate ~= 60 Hz
   // long frame_life = 20; // millisec, so that frame_rate ~= 48 Hz
   // long frame_life = 33; // millisec, so that frame_rate ~= 30 Hz
@@ -38,17 +39,23 @@ void Display::animate() {
   short nF = 0;
 
   while (advance) {
-    sleep_for(milliseconds(1)); // to moderate CPU
+    if (idle) { // do nothing unless near end of frame life
+      sleep_for(milliseconds(frame_life - 1));
+      idle = false;
+    } else {
+      sleep_for(microseconds(100)); // to moderate CPU
+    }
 
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
     if(frame_age >= frame_life) {
-      discs[0]->move();
+      discs[0]->move(screen_height);
       renderFrame();
       nF++;
       if(nF==120)
         advance = false;
+      idle = true;
       frame_start = system_clock::now();
     }
   }

@@ -15,7 +15,7 @@ struct Disc {
     Disc(unsigned short rad, IntPair pos, IntPair vel)
       : radius(rad), position(pos), velocity(vel) { }
 
-    void move();
+    void move(short);
 };
 
 #endif
