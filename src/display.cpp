@@ -79,9 +79,10 @@ void Display::renderFrame() const {
   SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
   SDL_RenderDrawLine(sdl_renderer, screen_width, 0, 0, screen_height);
 
-  // Set render draw color to a red with ~50% opacity.
-  SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
-  SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0x80);
+  // // Set render draw color to a red with ~50% opacity.
+  // SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
+  // SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0x80);
+  SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0xFF);
   Circ circ = {discs[0]->position, discs[0]->radius};
   // Circ circ = {  // static_cast here appeases compiler warning
     // discs[0]->position, static_cast<unsigned short>(screen_height/4) };
