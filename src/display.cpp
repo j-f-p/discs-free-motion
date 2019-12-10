@@ -30,13 +30,13 @@ void Display::animate() {
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
   bool advance = true, idle = true;
+  SDL_Event sdl_event;
   // long frame_life = 16; // millisec, so that frame_rate ~= 60 Hz
   // long frame_life = 20; // millisec, so that frame_rate ~= 48 Hz
   // long frame_life = 33; // millisec, so that frame_rate ~= 30 Hz
   long frame_life = 41; // millisec, so that frame_rate ~= 24 Hz
   time_point<system_clock> frame_start = system_clock::now();
   long frame_age;
-  short nF = 0;
 
   while (advance) {
     if (idle) { // do nothing unless near end of frame life
@@ -46,21 +46,22 @@ void Display::animate() {
       sleep_for(microseconds(100)); // to moderate CPU
     }
 
+    while( SDL_PollEvent(&sdl_event) != 0 )
+      if(sdl_event.type==SDL_QUIT)
+        advance = false;
+
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
     if(frame_age >= frame_life) {
       discs[0]->move(screen_height);
       renderFrame();
-      nF++;
-      if(nF==120)
-        advance = false;
       idle = true;
       frame_start = system_clock::now();
     }
   }
 
-  SDL_Delay(2000); // 2 sec delay
+  SDL_Delay(250); // 1/4 sec delay
 
   SDL_DestroyRenderer(sdl_renderer);
   SDL_DestroyWindow(sdl_window);
@@ -79,9 +80,7 @@ void Display::renderFrame() const {
   SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
   SDL_RenderDrawLine(sdl_renderer, screen_width, 0, 0, screen_height);
 
-  // // Set render draw color to a red with ~50% opacity.
-  // SDL_SetRenderDrawBlendMode(sdl_renderer, SDL_BLENDMODE_BLEND);
-  // SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0x80);
+  // Set render draw color to a red.
   SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0xFF);
   Circ circ = {discs[0]->position, discs[0]->radius};
   // Circ circ = {  // static_cast here appeases compiler warning
