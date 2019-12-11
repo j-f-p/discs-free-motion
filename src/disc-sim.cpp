@@ -5,12 +5,16 @@
 //  using Display
     using std::vector;
     using std::shared_ptr;
+    using std::unique_ptr;
     using std::make_shared;
 
 #include <random>
     using std::mt19937;
     using std::random_device;
     using std::uniform_int_distribution;
+
+#include <utility>
+    using std::move;
 
 int main() {
   Display display;
@@ -30,5 +34,7 @@ int main() {
   )); // Disc(radius, center, zero-initialized velocity)
 
   display.setDiscs(discs);
-  display.animate();
+
+  unique_ptr<bool> advance(new bool{true});
+  display.animate(move(advance));
 }

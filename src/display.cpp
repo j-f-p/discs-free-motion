@@ -4,9 +4,7 @@
 //  using Disc and IntPair
 //  using Circ and RenderFillCirc
 //  using functions and constants that begin with "SDL_"
-    using std::vector;
-    using std::shared_ptr;
-
+    using std::unique_ptr;
 
 #include <chrono>
     using std::chrono::duration_cast;
@@ -19,7 +17,7 @@
     using std::this_thread::sleep_for;
 
 // Animate displays an animation of the simulation.
-void Display::animate() {
+void Display::animate(unique_ptr<bool> advance) {
   SDL_Init(SDL_INIT_VIDEO);
 
   SDL_Window*
@@ -29,7 +27,7 @@ void Display::animate() {
 
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
-  bool advance = true, idle = true;
+  bool idle = true;
   SDL_Event sdl_event;
   // long frame_life = 16; // millisec, so that frame_rate ~= 60 Hz
   // long frame_life = 20; // millisec, so that frame_rate ~= 48 Hz
@@ -38,7 +36,7 @@ void Display::animate() {
   time_point<system_clock> frame_start = system_clock::now();
   long frame_age;
 
-  while (advance) {
+  while (*advance) {
     if (idle) { // do nothing unless near end of frame life
       sleep_for(milliseconds(frame_life - 1));
       idle = false;
@@ -48,7 +46,7 @@ void Display::animate() {
 
     while( SDL_PollEvent(&sdl_event) != 0 )
       if(sdl_event.type==SDL_QUIT)
-        advance = false;
+        *advance = false;
 
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();

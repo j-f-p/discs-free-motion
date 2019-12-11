@@ -12,6 +12,7 @@
 
 #include <memory>
 // using shared_ptr
+// using unique_ptr
 
 // Display is a manager of the logic that displays the disk simulation.
 class Display {
@@ -26,7 +27,7 @@ class Display {
       discs = initDiscs;
     }
 
-    void animate();
+    void animate(std::unique_ptr<bool>);
     void renderFrame() const;
 };
 
