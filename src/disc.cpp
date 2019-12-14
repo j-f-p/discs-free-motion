@@ -6,12 +6,12 @@
     using std::fmod;
 
 // Move Disc instance by updating its position based on rectilinear motion with
-// constant velocity.
+// constant velocity and periodic boundaries.
 void Disc::move(short screen_length) {
-  // TODO: employ non-unit time delta
   position.x += velocity.x;
   position.y += velocity.y;
 
+  // Apply periodic boundary conditions.
   if (position.x < 0  or  position.x > screen_length)
     position.x = fmod(position.x + screen_length, screen_length);
 
