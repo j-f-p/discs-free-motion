@@ -4,9 +4,8 @@
 #include "display.h"
 //  using Display
     using std::vector;
-    using std::shared_ptr;
     using std::unique_ptr;
-    using std::make_shared;
+    using std::make_unique;
 
 #include <random>
     using std::mt19937;
@@ -25,11 +24,11 @@ int main() {
   uniform_int_distribution<short> pos_dis(0, display.screen_height);
   uniform_int_distribution<short> vel_dis(-4, -4); // pixels / frame
 
-  display.addDisc(make_shared<Disc>(
+  display.addDisc(move(make_unique<Disc>(
     display.screen_height / 20,
     IntPair( pos_dis(gen), pos_dis(gen) ),
     IntPair( vel_dis(gen), vel_dis(gen) )
-  )); // Disc(radius, center, zero-initialized velocity)
+  ))); // Disc(radius, center, zero-initialized velocity)
 
   unique_ptr<bool> advance(new bool{true});
   display.animate(move(advance));

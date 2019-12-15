@@ -4,7 +4,6 @@
 //  using Disc and IntPair
 //  using Circ and RenderFillCirc
 //  using functions and constants that begin with "SDL_"
-    using std::shared_ptr;
     using std::unique_ptr;
 
 #include <chrono>
@@ -17,8 +16,11 @@
 #include <thread>
     using std::this_thread::sleep_for;
 
-void Display::addDisc(shared_ptr<Disc> disk) {
-  discs.push_back(disk);
+#include <utility>
+    using std::move;
+
+void Display::addDisc(unique_ptr<Disc> disk) {
+  discs.push_back(move(disk));
 }
 
 // Animate displays an animation of the simulation.
