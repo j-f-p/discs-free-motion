@@ -4,6 +4,7 @@
 //  using Disc and IntPair
 //  using Circ and RenderFillCirc
 //  using functions and constants that begin with "SDL_"
+    using std::shared_ptr;
     using std::unique_ptr;
 
 #include <chrono>
@@ -15,6 +16,10 @@
 
 #include <thread>
     using std::this_thread::sleep_for;
+
+void Display::addDisc(shared_ptr<Disc> disk) {
+  discs.push_back(disk);
+}
 
 // Animate displays an animation of the simulation.
 void Display::animate(unique_ptr<bool> advance) {
@@ -29,9 +34,6 @@ void Display::animate(unique_ptr<bool> advance) {
 
   bool idle = true;
   SDL_Event sdl_event;
-  // long frame_life = 16; // millisec, so that frame_rate ~= 60 Hz
-  // long frame_life = 20; // millisec, so that frame_rate ~= 48 Hz
-  // long frame_life = 33; // millisec, so that frame_rate ~= 30 Hz
   long frame_life = 41; // millisec, so that frame_rate ~= 24 Hz
   time_point<system_clock> frame_start = system_clock::now();
   long frame_age;
@@ -51,7 +53,7 @@ void Display::animate(unique_ptr<bool> advance) {
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
-    if(frame_age >= frame_life) {
+    if(frame_age > frame_life) {
       discs[0]->move(screen_height);
       renderFrame();
       idle = true;
@@ -59,7 +61,8 @@ void Display::animate(unique_ptr<bool> advance) {
     }
   }
 
-  SDL_Delay(250); // 1/4 sec delay
+  // 1/4 sec delay to briefly display the last frame stopped before closing
+  SDL_Delay(250);
 
   SDL_DestroyRenderer(sdl_renderer);
   SDL_DestroyWindow(sdl_window);
