@@ -1,6 +1,6 @@
-#include "fillCirc.h"
-// implementing RenderFillCirc for fillCirc.h
-// using Circ, IntPair, SDL_Renderer and SDL_RenderDrawPoint
+#include "renderFillCirc.h"
+// implementing RenderFillCirc for renderFillCirc.h
+// using Circ, SDL_Renderer and SDL_RenderDrawPoint
 
 void RenderFillCirc(SDL_Renderer* renderer, const Circ* circ) {
   // Comparison between signed short i and unsigned short u: i <= u.

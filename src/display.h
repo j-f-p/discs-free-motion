@@ -4,7 +4,7 @@
 #include "disc.h"
 // using Disc
 
-#include "fillCirc.h"
+#include "renderFillCirc.h"
 // using SDL_Renderer
 
 #include <vector>
