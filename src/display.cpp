@@ -21,7 +21,7 @@
     using std::this_thread::sleep_for;
 
 namespace {
-  vector<unique_ptr<Disc>> &discs = model::retDiscs();
+  const vector<unique_ptr<Disc>> &discs = model::retDiscs();
 }
 
 // Animate displays an animation of the simulation.

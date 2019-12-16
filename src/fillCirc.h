@@ -12,6 +12,6 @@ struct Circ {
   const unsigned short radius;
 };
 
-void RenderFillCirc(SDL_Renderer*, Circ*);
+void RenderFillCirc(SDL_Renderer*, const Circ*);
 
 #endif

@@ -2,7 +2,7 @@
 // implementing RenderFillCirc for fillCirc.h
 // using Circ, IntPair, SDL_Renderer and SDL_RenderDrawPoint
 
-void RenderFillCirc(SDL_Renderer* renderer, Circ* circ) {
+void RenderFillCirc(SDL_Renderer* renderer, const Circ* circ) {
   // Comparison between signed short i and unsigned short u: i <= u.
   auto leq = [](short i, unsigned short u)->bool {
     return  i < 0  ||  static_cast<unsigned short>(i) <= u;

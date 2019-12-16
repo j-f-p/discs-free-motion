@@ -12,7 +12,7 @@
 
 namespace model {
   void addDisc(std::unique_ptr<Disc>);
-  std::vector<std::unique_ptr<Disc>>& retDiscs();
+  const std::vector<std::unique_ptr<Disc>>& retDiscs();
 }
 
 #endif

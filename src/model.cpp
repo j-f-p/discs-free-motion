@@ -15,7 +15,7 @@ namespace model {
     discs.push_back(move(disk));
   }
 
-  vector<unique_ptr<Disc>>& retDiscs() {
+  const vector<unique_ptr<Disc>>& retDiscs() {
     return discs;
   }
 }
