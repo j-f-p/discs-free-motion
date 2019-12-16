@@ -1,11 +1,12 @@
-#include "disc.h"
-//  using Disc and IntPair
-
 #include "display.h"
+//  using Disc and IntPair
 //  using Display
     using std::vector;
     using std::unique_ptr;
     using std::make_unique;
+
+#include "model.h"
+//  using model::addDisc
 
 #include <random>
     using std::mt19937;
@@ -24,7 +25,7 @@ int main() {
   uniform_int_distribution<short> pos_dis(0, display.screen_height);
   uniform_int_distribution<short> vel_dis(-4, -4); // pixels / frame
 
-  display.addDisc(move(make_unique<Disc>(
+  model::addDisc(move(make_unique<Disc>(
     display.screen_height / 20,
     IntPair( pos_dis(gen), pos_dis(gen) ),
     IntPair( vel_dis(gen), vel_dis(gen) )

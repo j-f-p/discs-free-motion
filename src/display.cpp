@@ -4,7 +4,11 @@
 //  using Disc and IntPair
 //  using Circ and RenderFillCirc
 //  using functions and constants that begin with "SDL_"
+    using std::vector;
     using std::unique_ptr;
+
+#include "model.h"
+//  using model::retDiscs
 
 #include <chrono>
     using std::chrono::duration_cast;
@@ -16,11 +20,8 @@
 #include <thread>
     using std::this_thread::sleep_for;
 
-#include <utility>
-    using std::move;
-
-void Display::addDisc(unique_ptr<Disc> disk) {
-  discs.push_back(move(disk));
+namespace {
+  vector<unique_ptr<Disc>> &discs = model::retDiscs();
 }
 
 // Animate displays an animation of the simulation.
