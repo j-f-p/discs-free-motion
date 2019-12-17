@@ -1,20 +1,17 @@
 #ifndef DISC_H
 #define DISC_H
 
-#include "intPair.h"
+#include "circ.h"
+// using Circ
 // using IntPair
 
-// Disc represents a solid circular object. Its position attribute refers to
-// the circle's center. Having only public members, it is defined as a struct.
+// Disc represents a solid circular object. Because it has only public members
+// and I favor the efficiency of direct data access for this project, it is
+// defined as a struct.
 struct Disc {
-    const unsigned short radius;
-
-    IntPair position;
+    Circ circle;
     const IntPair velocity;
-
-    Disc(unsigned short rad, IntPair pos, IntPair vel)
-      : radius(rad), position(pos), velocity(vel) { }
-
+    Disc(Circ circ, IntPair vel): circle(circ), velocity(vel) { }
     void move(short);
 };
 

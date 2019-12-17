@@ -23,11 +23,10 @@ int main() {
   random_device rd; // non-deterministic seed generator
   mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
   uniform_int_distribution<short> pos_dis(0, display.screen_height);
-  uniform_int_distribution<short> vel_dis(-4, -4); // pixels / frame
+  uniform_int_distribution<short> vel_dis(-4, 4); // pixels / frame
 
   model::addDisc(move(make_unique<Disc>(
-    display.screen_height / 20,
-    IntPair( pos_dis(gen), pos_dis(gen) ),
+    Circ( IntPair( pos_dis(gen), pos_dis(gen) ), display.screen_height / 20 ),
     IntPair( vel_dis(gen), vel_dis(gen) )
   ))); // Disc(radius, center, zero-initialized velocity)
 
