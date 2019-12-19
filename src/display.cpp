@@ -35,6 +35,8 @@ void Display::animate(unique_ptr<bool> advance) {
 
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
+  renderFrame(); // render initial state
+
   bool idle = true;
   SDL_Event sdl_event;
   long frame_life = 41; // millisec, so that frame_rate ~= 24 Hz
