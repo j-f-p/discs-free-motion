@@ -5,6 +5,7 @@
 //  using Circ and RenderFillCirc
 //  using functions and constants that begin with "SDL_"
     using std::vector;
+    using std::shared_ptr;
     using std::unique_ptr;
 
 #include "model.h"
@@ -25,7 +26,7 @@ namespace {
 }
 
 // Animate displays an animation of the simulation.
-void Display::animate(unique_ptr<bool> advance) {
+void Display::animate(shared_ptr<bool> advance, shared_ptr<bool> move_disc) {
   SDL_Init(SDL_INIT_VIDEO);
 
   SDL_Window*
@@ -36,10 +37,9 @@ void Display::animate(unique_ptr<bool> advance) {
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
   renderFrame(); // render initial state
+  *move_disc = true;
 
-  bool idle = true;
   SDL_Event sdl_event;
-  long frame_life = 41; // millisec, so that frame_rate ~= 24 Hz
   time_point<system_clock> frame_start = system_clock::now();
   long frame_age;
 
@@ -59,7 +59,7 @@ void Display::animate(unique_ptr<bool> advance) {
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
     if(frame_age > frame_life) {
-      discs[0]->move(screen_height);
+      *move_disc = true;
       renderFrame();
       idle = true;
       frame_start = system_clock::now();

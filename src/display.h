@@ -1,9 +1,6 @@
 #ifndef DISPLAY_H
 #define DISPLAY_H
 
-#include "disc.h"
-// using Disc
-
 #include "renderFillCirc.h"
 // using SDL_Renderer
 
@@ -11,7 +8,7 @@
 // using vector
 
 #include <memory>
-// using unique_ptr
+// using shared_ptr
 
 // Display is a manager of the logic that displays the disk simulation.
 class Display {
@@ -19,10 +16,12 @@ class Display {
     void renderFrame() const;
 
   public:
+    bool idle{true};
     const unsigned short screen_width{480};
     const unsigned short screen_height{480};
+    const long frame_life{41}; // millisec, so that frame_rate ~= 24 Hz
 
-    void animate(std::unique_ptr<bool>);
+    void animate(std::shared_ptr<bool>, std::shared_ptr<bool>);
 };
 
 #endif
