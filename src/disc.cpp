@@ -5,7 +5,9 @@
     using std::fmod;
 
 // Move Disc instance by updating its position based on rectilinear motion with
-// constant velocity and periodic boundaries.
+// constant velocity and periodic boundaries. The change in time to compute the
+// change in position is approximately 1 frame life so that the velocity is
+// approximately in units of pixel lengths per frame life (pixels/frame).
 void Disc::move(short screen_length) {
   circle.center.x += velocity.x;
   circle.center.y += velocity.y;

@@ -31,15 +31,12 @@ namespace model {
   }
 
   void kinematics() {
-    while (*advance) {
-      // if (display.idle) // do nothing unless near end of frame life
-      //   continue;
+    while (*advance) { // always entered when *move_disc = false
       if (display.idle) {
-        sleep_for(milliseconds(display.frame_life - 1)); // to moderate CPU
-      } else {
+        sleep_for(milliseconds(display.frame_life - 2)); // to moderate CPU
+      } else { // always entered when *move_disc = false
         sleep_for(microseconds(100)); // to less moderate CPU
       }
-      // sleep_for(microseconds(50));
 
       if (*move_disc==true) {
         discs[0]->move(display.screen_height);

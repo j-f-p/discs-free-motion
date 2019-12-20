@@ -17,10 +17,10 @@ class Display {
 
   public:
     bool idle{true};
-    const unsigned short screen_width{480};
-    const unsigned short screen_height{480};
-    const long frame_life{41}; // millisec, so that frame_rate ~= 24 Hz
-
+    const short screen_width{480};
+    const short screen_height{480};
+    const short frame_life{41};
+      // frame_life is 41 millisec, so that frame_rate ~= 24 Hz
     void animate();
 };
 

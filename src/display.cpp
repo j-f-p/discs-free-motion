@@ -39,7 +39,7 @@ void Display::animate() {
 
   SDL_Event sdl_event;
   time_point<system_clock> frame_start = system_clock::now();
-  long frame_age;
+  short frame_age;
 
   while (*model::advance) {
     if (idle) { // do nothing unless near end of frame life
@@ -56,13 +56,18 @@ void Display::animate() {
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
-    if(frame_age > frame_life) {
+    if(frame_age > frame_life) { // always entered when idle = false
       *model::move_disc = true;
-      renderFrame();
-      idle = true;
-      frame_start = system_clock::now();
-    }
-  }
+      while(*model::move_disc) {
+        sleep_for(microseconds(50)); // to moderate CPU
+        if (not *model::move_disc) {
+          renderFrame();
+          idle = true;
+          frame_start = system_clock::now();
+        }
+      } // close while(*model::move_disc)
+    } // close if(frame_age > frame_life)
+  } // clse while (*model::advacne)
 
   // 1/4 sec delay to briefly display the last frame stopped before closing
   SDL_Delay(250);
