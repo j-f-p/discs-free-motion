@@ -19,6 +19,7 @@ namespace model {
     vector<unique_ptr<Disc>> discs;
   }
 
+  shared_ptr<bool> advance(new bool{true}), move_disc(new bool{});
   Display display;
 
   void addDisc(unique_ptr<Disc> disk) {
@@ -29,7 +30,7 @@ namespace model {
     return discs;
   }
 
-  void kinematics(shared_ptr<bool> advance, shared_ptr<bool> move_disc) {
+  void kinematics() {
     while (*advance) {
       // if (display.idle) // do nothing unless near end of frame life
       //   continue;

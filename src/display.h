@@ -21,7 +21,7 @@ class Display {
     const unsigned short screen_height{480};
     const long frame_life{41}; // millisec, so that frame_rate ~= 24 Hz
 
-    void animate(std::shared_ptr<bool>, std::shared_ptr<bool>);
+    void animate();
 };
 
 #endif

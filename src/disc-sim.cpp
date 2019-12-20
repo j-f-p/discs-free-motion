@@ -32,8 +32,7 @@ int main() {
     IntPair( vel_dis(gen), vel_dis(gen) )
   ))); // Disc(radius, center, zero-initialized velocity)
 
-  shared_ptr<bool> advance(new bool{true}), move_disc(new bool{});
-  thread sim_thread(model::kinematics, advance, move_disc);
-  model::display.animate(advance, move_disc);
+  thread sim_thread(model::kinematics);
+  model::display.animate();
   sim_thread.join();
 }

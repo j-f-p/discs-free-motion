@@ -12,9 +12,10 @@
 
 namespace model {
   extern Display display;
+  extern std::shared_ptr<bool> advance, move_disc;
   void addDisc(std::unique_ptr<Disc>);
   const std::vector<std::unique_ptr<Disc>>& retDiscs();
-  void kinematics(std::shared_ptr<bool>, std::shared_ptr<bool>);
+  void kinematics();
 }
 
 #endif
