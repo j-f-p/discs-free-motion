@@ -10,9 +10,13 @@
 #include "disc.h"
 // using Disc
 
+#include <mutex>
+// using mutex
+
 namespace model {
-  extern Display display;
+  extern std::mutex xclusion;
   extern std::shared_ptr<bool> advance, move_disc;
+  extern Display display;
   void addDisc(std::unique_ptr<Disc>);
   const std::vector<std::unique_ptr<Disc>>& retDiscs();
   void kinematics();

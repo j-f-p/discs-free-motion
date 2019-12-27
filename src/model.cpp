@@ -3,6 +3,7 @@
     using std::shared_ptr;
     using std::unique_ptr;
     using std::vector;
+    using std::mutex;
 
 #include <chrono>
     using std::chrono::microseconds;
@@ -19,6 +20,7 @@ namespace model {
     vector<unique_ptr<Disc>> discs;
   }
 
+  mutex xclusion;
   shared_ptr<bool> advance(new bool{true}), move_disc(new bool{});
   Display display;
 
@@ -39,8 +41,10 @@ namespace model {
       }
 
       if (*move_disc==true) {
+        xclusion.lock();
         discs[0]->move(display.screen_height);
         *move_disc = false;
+        xclusion.unlock();
       }
     }
   } // close function kinematics

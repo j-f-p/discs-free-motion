@@ -4,10 +4,10 @@
 //  using Disc and IntPair
 //  using Circ and RenderFillCirc
 //  using functions and constants that begin with "SDL_"
+//  using model::retDiscs
     using std::vector;
     using std::shared_ptr;
     using std::unique_ptr;
-//  using model::retDiscs
 
 #include <chrono>
     using std::chrono::duration_cast;
@@ -35,7 +35,10 @@ void Display::animate() {
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
   renderFrame(); // render initial state
+
+  model::xclusion.lock();
   *model::move_disc = true;
+  model::xclusion.unlock();
 
   SDL_Event sdl_event;
   time_point<system_clock> frame_start = system_clock::now();
@@ -50,14 +53,19 @@ void Display::animate() {
     }
 
     while( SDL_PollEvent(&sdl_event) != 0 )
-      if(sdl_event.type==SDL_QUIT)
+      if(sdl_event.type==SDL_QUIT) {
+        model::xclusion.lock();
         *model::advance = false;
+        model::xclusion.unlock();
+      }
 
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
     if(frame_age > frame_life) { // always entered when idle = false
+      model::xclusion.lock();
       *model::move_disc = true;
+      model::xclusion.unlock();
       while(*model::move_disc) {
         sleep_for(microseconds(50)); // to moderate CPU
         if (not *model::move_disc) {
@@ -75,7 +83,7 @@ void Display::animate() {
   SDL_DestroyRenderer(sdl_renderer);
   SDL_DestroyWindow(sdl_window);
   SDL_Quit();
-}
+} // close: void Display::animate()
 
 void Display::renderFrame() const {
   // Begin render instructions. -----------------------------------------------
