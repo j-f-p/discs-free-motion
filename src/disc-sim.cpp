@@ -12,9 +12,10 @@
     using std::random_device;
     using std::uniform_int_distribution;
 
-#include <thread>
-    using std::this_thread::sleep_for;
-    using std::thread;
+#include <future>
+    using std::async;
+    using std::future;
+    using std::launch;
 
 #include <utility>
     using std::move;
@@ -32,7 +33,6 @@ int main() {
     IntPair( vel_dis(gen), vel_dis(gen) )
   ))); // Disc(radius, center, zero-initialized velocity)
 
-  thread sim_thread(model::kinematics);
+  future<void> ftr = async(launch::async, model::kinematics);
   model::display.animate();
-  sim_thread.join();
 }
