@@ -3,8 +3,6 @@
 //  using model::display
 //  using model::addDisc
 //  using model::kinematics
-    using std::vector;
-    using std::shared_ptr;
     using std::make_unique;
 
 #include <random>
@@ -13,7 +11,6 @@
     using std::uniform_int_distribution;
 
 #include <thread>
-    using std::this_thread::sleep_for;
     using std::thread;
 
 #include <utility>

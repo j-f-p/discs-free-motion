@@ -1,12 +1,11 @@
 #include "model.h"
 //  implementing Display::animate for display.h
 //  implementing Display::renderFrame for display.h
-//  using Disc and IntPair
-//  using Circ and RenderFillCirc
+//  using Disc
+//  using RenderFillCirc
 //  using functions and constants that begin with "SDL_"
 //  using model::retDiscs
     using std::vector;
-    using std::shared_ptr;
     using std::unique_ptr;
 
 #include <chrono>

@@ -3,15 +3,19 @@
 
 #include "display.h"
 // using Display
-// using vector
-// using unique_ptr
-// using shared_ptr
 
 #include "disc.h"
 // using Disc
 
+#include <memory>
+// using unique_ptr
+// using shared_ptr
+
 #include <mutex>
 // using mutex
+
+#include <vector>
+// using vector
 
 namespace model {
   extern std::mutex xclusion;

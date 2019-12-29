@@ -1,5 +1,6 @@
 #include "model.h"
 //  using Disc
+//  using Display
     using std::shared_ptr;
     using std::unique_ptr;
     using std::vector;
@@ -34,11 +35,10 @@ namespace model {
 
   void kinematics() {
     while (*advance) { // always entered when *move_disc = false
-      if (display.idle) {
+      if (display.idle)
         sleep_for(milliseconds(display.frame_life - 2)); // to moderate CPU
-      } else { // always entered when *move_disc = false
+      else // always entered when *move_disc = false
         sleep_for(microseconds(100)); // to less moderate CPU
-      }
 
       if (*move_disc==true) {
         xclusion.lock();

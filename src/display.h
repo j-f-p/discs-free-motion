@@ -4,12 +4,6 @@
 #include "renderFillCirc.h"
 // using SDL_Renderer
 
-#include <vector>
-// using vector
-
-#include <memory>
-// using shared_ptr
-
 // Display is a manager of the logic that displays the disk simulation.
 class Display {
     SDL_Renderer* sdl_renderer;
