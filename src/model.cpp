@@ -4,6 +4,7 @@
     using std::unique_ptr;
     using std::vector;
     using std::mutex;
+    using std::unique_lock;
 
 #include <chrono>
     using std::chrono::microseconds;
@@ -41,10 +42,10 @@ namespace model {
       }
 
       if (*move_disc==true) {
-        xclusion.lock();
+        unique_lock<mutex> ulock(xclusion);
         discs[0]->move(display.screen_height);
         *move_disc = false;
-        xclusion.unlock();
+        ulock.unlock();
       }
     }
   } // close function kinematics

@@ -8,6 +8,8 @@
     using std::vector;
     using std::shared_ptr;
     using std::unique_ptr;
+    using std::mutex;
+    using std::unique_lock;
 
 #include <chrono>
     using std::chrono::duration_cast;
@@ -36,9 +38,9 @@ void Display::animate() {
 
   renderFrame(); // render initial state
 
-  model::xclusion.lock();
+  unique_lock<mutex> ulock(model::xclusion);
   *model::move_disc = true;
-  model::xclusion.unlock();
+  ulock.unlock();
 
   SDL_Event sdl_event;
   time_point<system_clock> frame_start = system_clock::now();
@@ -54,18 +56,18 @@ void Display::animate() {
 
     while( SDL_PollEvent(&sdl_event) != 0 )
       if(sdl_event.type==SDL_QUIT) {
-        model::xclusion.lock();
+        ulock.lock();
         *model::advance = false;
-        model::xclusion.unlock();
+        ulock.unlock();
       }
 
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
     if(frame_age > frame_life) { // always entered when idle = false
-      model::xclusion.lock();
+      ulock.lock();
       *model::move_disc = true;
-      model::xclusion.unlock();
+      ulock.unlock();
       while(*model::move_disc) {
         sleep_for(microseconds(50)); // to moderate CPU
         if (not *model::move_disc) {
