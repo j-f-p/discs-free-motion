@@ -1,12 +1,16 @@
+#include "display.h"
+//  initilizing idle, screen_width, screen_height and frame_life for display.h
+//  implementing animate for display.h
+
 #include "model.h"
-//  implementing Display::animate for display.h
-//  implementing Display::renderFrame for display.h
 //  using Disc
-//  using RenderFillCirc
-//  using functions and constants that begin with "SDL_"
 //  using model::retDiscs
     using std::vector;
     using std::unique_ptr;
+
+#include "renderFillCirc.h"
+//  using RenderFillCirc
+//  using functions and constants that begin with "SDL_"
 
 #include <chrono>
     using std::chrono::duration_cast;
@@ -18,12 +22,41 @@
 #include <thread>
     using std::this_thread::sleep_for;
 
+namespace display {
+  
+bool idle{true};
+const short screen_width{640};
+const short screen_height{480};
+const short frame_life{41};
+  // frame_life is 41 millisec, so that frame_rate ~= 24 Hz
+
 namespace {
-  const vector<unique_ptr<Disc>> &discs = model::retDiscs();
-}
+SDL_Renderer* sdl_renderer;
+const vector<unique_ptr<Disc>> &discs = model::retDiscs();
+
+void renderFrame() {
+  // Begin render instructions. -----------------------------------------------
+  // Clear screen with set render draw colour: a dark grey.
+  SDL_SetRenderDrawColor(sdl_renderer, 0xA9, 0xA9, 0xA9, 0xFF);
+  SDL_RenderClear(sdl_renderer);
+
+  // Render two black reference lines that intersect at the screen center.
+  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0xFF);
+  SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
+  SDL_RenderDrawLine(sdl_renderer, screen_width, 0, 0, screen_height);
+
+  // Render a red disc.
+  SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0xFF);
+  RenderFillCirc(sdl_renderer, &discs[0]->circle);
+  // End render instructions. -------------------------------------------------
+
+  // Execute render instructions.
+  SDL_RenderPresent(sdl_renderer);
+} // close void renderFrame()
+} // close anonymous namespace
 
 // Animate displays an animation of the simulation.
-void Display::animate() {
+void animate() {
   SDL_Init(SDL_INIT_VIDEO);
 
   SDL_Window*
@@ -82,24 +115,6 @@ void Display::animate() {
   SDL_DestroyRenderer(sdl_renderer);
   SDL_DestroyWindow(sdl_window);
   SDL_Quit();
-} // close: void Display::animate()
+} // close void display::animate()
 
-void Display::renderFrame() const {
-  // Begin render instructions. -----------------------------------------------
-  // Clear screen with set render draw colour: a dark grey.
-  SDL_SetRenderDrawColor(sdl_renderer, 0xA9, 0xA9, 0xA9, 0xFF);
-  SDL_RenderClear(sdl_renderer);
-
-  // Render two black reference lines that intersect at the screen center.
-  SDL_SetRenderDrawColor(sdl_renderer, 0x00, 0x00, 0x00, 0xFF);
-  SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
-  SDL_RenderDrawLine(sdl_renderer, screen_width, 0, 0, screen_height);
-
-  // Render a red disc.
-  SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0xFF);
-  RenderFillCirc(sdl_renderer, &discs[0]->circle);
-  // End render instructions. -------------------------------------------------
-
-  // Execute render instructions.
-  SDL_RenderPresent(sdl_renderer);
-}
+} // close namespace display

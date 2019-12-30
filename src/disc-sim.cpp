@@ -1,6 +1,9 @@
+#include "display.h"
+//  using display::screen_width and display::screen_height
+//  using display::animate
+
 #include "model.h"
-//  using Display, Disc, Circ and IntPair
-//  using model::display
+//  using Disc, Circ and IntPair
 //  using model::addDisc
 //  using model::kinematics
     using std::make_unique;
@@ -20,16 +23,17 @@ int main() {
   // Generate random positions and velocities based on prescribed ranges.
   random_device rd; // non-deterministic seed generator
   mt19937 gen(rd()); // Mersenne Twister pseudo-random number generator
-  uniform_int_distribution<short> pos_dis(0, model::display.screen_height);
+  uniform_int_distribution<short> x_pos_dis(0, display::screen_width);
+  uniform_int_distribution<short> y_pos_dis(0, display::screen_height);
   uniform_int_distribution<short> vel_dis(-4, 4); // ~= pixels / frame
 
   model::addDisc(move(make_unique<Disc>(
-    Circ( IntPair( pos_dis(gen), pos_dis(gen) ),
-          model::display.screen_height / 20      ),
+    Circ( IntPair( x_pos_dis(gen), y_pos_dis(gen) ),
+          display::screen_height / 20      ),
     IntPair( vel_dis(gen), vel_dis(gen) )
   ))); // Disc(radius, center, zero-initialized velocity)
 
-  thread sim_thread(model::kinematics);
-  model::display.animate();
-  sim_thread.join();
+  thread calc_thread(model::kinematics);
+  display::animate();
+  calc_thread.join();
 }

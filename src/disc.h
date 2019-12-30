@@ -12,7 +12,7 @@ struct Disc {
     Circ circle;
     const IntPair velocity;
     Disc(Circ circ, IntPair vel): circle(circ), velocity(vel) { }
-    void move(short);
+    void move();
 };
 
 #endif
