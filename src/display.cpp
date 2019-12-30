@@ -68,10 +68,6 @@ void animate() {
 
   renderFrame(); // render initial state
 
-  model::xclusion.lock();
-  model::move_disc = true;
-  model::xclusion.unlock();
-
   SDL_Event sdl_event;
   time_point<system_clock> frame_start = system_clock::now();
   short frame_age;
