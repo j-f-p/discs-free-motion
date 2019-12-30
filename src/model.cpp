@@ -5,7 +5,6 @@
 //  initilizing xclusion, advance and move_disc for model.h
 //  implementing addDisc, retDiscs and kinematics for model.h
 //  using Disc
-    using std::shared_ptr;
     using std::unique_ptr;
     using std::vector;
     using std::mutex;
@@ -26,7 +25,7 @@ namespace model {
   }
 
   mutex xclusion;
-  shared_ptr<bool> advance(new bool{true}), move_disc(new bool{});
+  bool advance{true}, move_disc{};
 
   void addDisc(unique_ptr<Disc> disk) {
     discs.push_back(move(disk));
@@ -37,18 +36,18 @@ namespace model {
   }
 
   void kinematics() {
-    while (*advance) { // always entered when *move_disc = false
+    while (advance) { // always entered when move_disc = false
       if (display::idle)
         sleep_for(milliseconds(display::frame_life - 2)); // to moderate CPU
-      else // always entered when *move_disc = false
+      else // always entered when move_disc = false
         sleep_for(microseconds(100)); // to less moderate CPU
 
-      if (*move_disc==true) {
+      if (move_disc==true) {
         xclusion.lock();
         discs[0]->move();
-        *move_disc = false;
+        move_disc = false;
         xclusion.unlock();
       }
-    } // close loop while (*advance)
+    } // close loop while (advance)
   } // close function kinematics
 } // close namespace model

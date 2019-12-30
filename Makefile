@@ -1,6 +1,6 @@
 VPATH = src
 CPPFLAGS = -pthread
-CXXFLAGS = -I/usr/include/SDL2 -std=c++17 -Wall -O2
+CXXFLAGS = -I/usr/include/SDL2 -std=c++17 -Wall -O3
 LDLIBS = -lSDL2
 
 OBJECTS = disc.o disc-sim.o display.o model.o renderFillCirc.o

@@ -23,7 +23,7 @@
     using std::this_thread::sleep_for;
 
 namespace display {
-  
+
 bool idle{true};
 const short screen_width{640};
 const short screen_height{480};
@@ -69,14 +69,14 @@ void animate() {
   renderFrame(); // render initial state
 
   model::xclusion.lock();
-  *model::move_disc = true;
+  model::move_disc = true;
   model::xclusion.unlock();
 
   SDL_Event sdl_event;
   time_point<system_clock> frame_start = system_clock::now();
   short frame_age;
 
-  while (*model::advance) {
+  while (model::advance) {
     if (idle) { // do nothing unless near end of frame life
       sleep_for(milliseconds(frame_life - 1));
       idle = false;
@@ -87,7 +87,7 @@ void animate() {
     while( SDL_PollEvent(&sdl_event) != 0 )
       if(sdl_event.type==SDL_QUIT) {
         model::xclusion.lock();
-        *model::advance = false;
+        model::advance = false;
         model::xclusion.unlock();
       }
 
@@ -96,16 +96,16 @@ void animate() {
 
     if(frame_age > frame_life) { // always entered when idle = false
       model::xclusion.lock();
-      *model::move_disc = true;
+      model::move_disc = true;
       model::xclusion.unlock();
-      while(*model::move_disc) {
+      while(model::move_disc) {
         sleep_for(microseconds(50)); // to moderate CPU
-        if (not *model::move_disc) {
+        if (not model::move_disc) {
           renderFrame();
           idle = true;
           frame_start = system_clock::now();
         }
-      } // close while(*model::move_disc)
+      } // close while(model::move_disc)
     } // close if(frame_age > frame_life)
   } // clse while (*model::advacne)
 
