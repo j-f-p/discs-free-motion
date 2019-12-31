@@ -36,10 +36,10 @@ namespace model {
   }
 
   void kinematics() {
-    while (advance) { // always entered when move_disc = false
+    while (advance) {
       if (display::idle)
         sleep_for(milliseconds(display::frame_life - 2)); // to moderate CPU
-      else // always entered when move_disc = false
+      else
         sleep_for(microseconds(100)); // to less moderate CPU
 
       if (move_disc==true) {

@@ -66,11 +66,14 @@ void animate() {
 
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
-  renderFrame(); // render initial state
-
   SDL_Event sdl_event;
-  time_point<system_clock> frame_start = system_clock::now();
   short frame_age;
+
+  renderFrame(); // render initial state
+  model::xclusion.lock();
+  model::move_disc = true;
+  model::xclusion.unlock();
+  time_point<system_clock> frame_start = system_clock::now();
 
   while (model::advance) {
     if (idle) { // do nothing unless near end of frame life
@@ -90,19 +93,15 @@ void animate() {
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
-    if(frame_age > frame_life) { // always entered when idle = false
+    if(frame_age > frame_life  and  model::move_disc==false) {
+      // always entered when idle = false
+      renderFrame();
       model::xclusion.lock();
       model::move_disc = true;
       model::xclusion.unlock();
-      while(model::move_disc) {
-        sleep_for(microseconds(50)); // to moderate CPU
-        if (not model::move_disc) {
-          renderFrame();
-          idle = true;
-          frame_start = system_clock::now();
-        }
-      } // close while(model::move_disc)
-    } // close if(frame_age > frame_life)
+      idle = true;
+      frame_start = system_clock::now();
+    } // close if(frame_age > frame_life ...)
   } // clse while (*model::advacne)
 
   // 1/4 sec delay to briefly display the last frame stopped before closing
