@@ -27,11 +27,12 @@ int main() {
   uniform_int_distribution<short> y_pos_dis(0, display::screen_height);
   uniform_int_distribution<short> vel_dis(-4, 4); // ~= pixels / frame
 
-  model::addDisc(move(make_unique<Disc>(
-    Circ( IntPair( x_pos_dis(gen), y_pos_dis(gen) ),
-          display::screen_height / 20      ),
-    IntPair( vel_dis(gen), vel_dis(gen) )
-  ))); // Disc(radius, center, zero-initialized velocity)
+  for( short disc_i=0;  disc_i < model::n_discs;  ++disc_i )
+    model::addDisc(move(make_unique<Disc>(
+      Circ( IntPair( x_pos_dis(gen), y_pos_dis(gen) ),
+            display::screen_height / 20      ),
+      IntPair( vel_dis(gen), vel_dis(gen) )
+    ))); // Disc(radius, center, zero-initialized velocity)
 
   thread calc_thread(model::kinematics);
   display::animate();

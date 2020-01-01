@@ -45,9 +45,10 @@ void renderFrame() {
   SDL_RenderDrawLine(sdl_renderer, 0, 0, screen_width, screen_height);
   SDL_RenderDrawLine(sdl_renderer, screen_width, 0, 0, screen_height);
 
-  // Render a red disc.
+  // Render discs red.
   SDL_SetRenderDrawColor(sdl_renderer, 0xC0, 0x00, 0x00, 0xFF);
-  RenderFillCirc(sdl_renderer, &discs[0]->circle);
+  for( short disc_i=0;  disc_i < model::n_discs;  ++disc_i )
+    RenderFillCirc(sdl_renderer, &discs[disc_i]->circle);
   // End render instructions. -------------------------------------------------
 
   // Execute render instructions.
@@ -67,11 +68,11 @@ void animate() {
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
   SDL_Event sdl_event;
-  short frame_age;
 
+  short frame_age;
   renderFrame(); // render initial state
   model::xclusion.lock();
-  model::move_disc = true;
+  model::move_discs = true;
   model::xclusion.unlock();
   time_point<system_clock> frame_start = system_clock::now();
 
@@ -93,16 +94,16 @@ void animate() {
     frame_age
       = duration_cast<milliseconds>(system_clock::now() - frame_start).count();
 
-    if(frame_age > frame_life  and  model::move_disc==false) {
+    if(frame_age > frame_life  and  model::move_discs==false) {
       // always entered when idle = false
       renderFrame();
       model::xclusion.lock();
-      model::move_disc = true;
+      model::move_discs = true;
       model::xclusion.unlock();
       idle = true;
       frame_start = system_clock::now();
     } // close if(frame_age > frame_life ...)
-  } // clse while (*model::advacne)
+  } // clse while (model::advacne)
 
   // 1/4 sec delay to briefly display the last frame stopped before closing
   SDL_Delay(250);
