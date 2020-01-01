@@ -25,10 +25,6 @@
 namespace display {
 
 bool idle{true};
-const short screen_width{640};
-const short screen_height{480};
-const short frame_life{41};
-  // frame_life is 41 millisec, so that frame_rate ~= 24 Hz
 
 namespace {
 SDL_Renderer* sdl_renderer;
