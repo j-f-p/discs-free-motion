@@ -6,7 +6,7 @@ LDLIBS = -lSDL2
 OBJECTS = disc.o disc-sim.o display.o model.o renderFillCirc.o
 
 disc_sim : $(OBJECTS)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o disc_sim $(OBJECTS) $(LDLIBS)
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o discs_freeMotion $(OBJECTS) $(LDLIBS)
 	rm $(OBJECTS)
 
 disc.o : disc.h display.h

@@ -57,9 +57,9 @@ void animate() {
   SDL_Init(SDL_INIT_VIDEO);
 
   SDL_Window*
-  sdl_window = SDL_CreateWindow("Disk Simulation", SDL_WINDOWPOS_CENTERED,
-                                SDL_WINDOWPOS_CENTERED, screen_width,
-                                screen_height, SDL_WINDOW_SHOWN);
+  sdl_window = SDL_CreateWindow("Disks in Free Rectilinear Motion",
+                 SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
+                 screen_width, screen_height, SDL_WINDOW_SHOWN);
 
   sdl_renderer = SDL_CreateRenderer(sdl_window, -1, SDL_RENDERER_ACCELERATED);
 
